@@ -10,10 +10,18 @@ if (!Number.isInteger(cantidad) || cantidad <= 0) {
 throw new Error('La cantidad debe ser un entero positivo');
 }
 const existente = this.productos.find((p) => p.nombre === nombre);
-if (existente) {existente.cantidad += cantidad;
+if (existente) {
+existente.cantidad += cantidad;
 } else {
 this.productos.push({ nombre, precio, cantidad });
 }
+}
+eliminar(nombre) {
+const indice = this.productos.findIndex((p) => p.nombre === nombre);
+if (indice === -1) {
+throw new Error(`El producto "${nombre}" no está en el carrito`);
+}
+this.productos.splice(indice, 1);
 }
 cantidadDeItems() {
 return this.productos.reduce((suma, p) => suma + p.cantidad, 0);
