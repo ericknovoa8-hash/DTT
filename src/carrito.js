@@ -6,11 +6,11 @@ DESC20: 0.20,
 export class Carrito {
 constructor() {
 this.productos = [];
-this.cupon = null;}
+this.cupon = null;
+}
 agregar(nombre, precio, cantidad = 1) {
 if (typeof precio !== 'number' || precio <= 0) {
-throw new Error('El precio debe ser mayor que cero');
-}
+throw new Error('El precio debe ser mayor que cero');}
 if (!Number.isInteger(cantidad) || cantidad <= 0) {
 throw new Error('La cantidad debe ser un entero positivo');
 }
@@ -44,10 +44,13 @@ descuento() {
 if (!this.cupon) return 0;
 return Math.round(this.subtotal() * CUPONES[this.cupon]);
 }
+baseGravable() {
+return this.subtotal() - this.descuento();
+}
 iva() {
-return Math.round((this.subtotal() - this.descuento()) * IVA);
+return Math.round(this.baseGravable() * IVA);
 }
 total() {
-return this.subtotal() - this.descuento() + this.iva();
+return this.baseGravable() + this.iva();
 }
 }
